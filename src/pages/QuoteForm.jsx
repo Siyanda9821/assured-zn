@@ -4,10 +4,8 @@ import { object, string, date, number } from 'yup';
 import { useState } from 'react';
 import './QuoteForm.css';
 
-// API Configuration
 const API_BASE_URL = 'https://688bd2e5cd9d22dda5cb646b.mockapi.io';
 
-// Dynamic validation schema based on insurance type
 const createValidationSchema = (insuranceType, subType) => {
   const baseSchema = {
     insuranceType: string()
@@ -57,7 +55,6 @@ const createValidationSchema = (insuranceType, subType) => {
       })
   };
 
-  // Add dynamic fields based on insurance type
   if (subType === 'Travel Insurance') {
     baseSchema.destination = string().required("Destination is required ✈️");
     baseSchema.travelStartDate = date()
@@ -153,10 +150,8 @@ export function QuoteForm() {
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Get pre-fill data from navigation state
   const preFilledData = location.state || {};
 
-  // Options for each insurance type
   const insuranceOptions = {
     'short-term': [
       'Travel Insurance',
@@ -175,7 +170,6 @@ export function QuoteForm() {
     ]
   };
 
-  // Dynamic initial values
   const getInitialValues = () => {
     const base = {
       insuranceType: preFilledData.insuranceType || '',
@@ -187,7 +181,6 @@ export function QuoteForm() {
       dateOfBirth: '',
     };
 
-    // Add dynamic fields based on subType
     const subType = preFilledData.subType;
 
     if (subType === 'Travel Insurance') {
@@ -213,7 +206,6 @@ export function QuoteForm() {
     return base;
   };
 
-  // Submit quote to MockAPI
   const submitQuoteToAPI = async (formData) => {
     try {
       const quoteData = {
@@ -245,28 +237,23 @@ export function QuoteForm() {
     }
   };
 
-  // Formik configuration
   const formik = useFormik({
     initialValues: getInitialValues(),
 
-    // Dynamic validation schema
     validationSchema: createValidationSchema(preFilledData.insuranceType, preFilledData.subType),
 
-    // onSubmit is triggered only when validationSchema passes
     onSubmit: async (values) => {
       setIsSubmitting(true);
 
       try {
         console.log('Quote form submitted:', values);
 
-        // Submit to MockAPI
         await submitQuoteToAPI(values);
 
-        // Navigate to results page
         navigate('/QuoteResults', {
           state: {
             formData: values,
-            quoteId: Date.now() // You can use the returned ID from API
+            quoteId: Date.now()
           }
         });
 
@@ -289,22 +276,19 @@ export function QuoteForm() {
     setFieldValue
   } = formik;
 
-  // Handle insurance type change and reset subtype
   const handleInsuranceTypeChange = (e) => {
     const newType = e.target.value;
     setFieldValue('insuranceType', newType);
-    setFieldValue('subType', ''); // Reset subtype when main type changes
+    setFieldValue('subType', '');
   };
 
   const goBack = () => {
     navigate(-1);
   };
 
-  // Render dynamic fields based on selected insurance
   const renderDynamicFields = () => {
     if (!values.subType) return null;
 
-    // Travel Insurance specific fields
     if (values.subType === 'Travel Insurance') {
       return (
         <div className="dynamic-fields">
@@ -383,7 +367,6 @@ export function QuoteForm() {
       );
     }
 
-    // Gadget Insurance specific fields
     if (values.subType === 'Gadget Insurance') {
       return (
         <div className="dynamic-fields">
@@ -489,7 +472,6 @@ export function QuoteForm() {
       );
     }
 
-    // Event Insurance specific fields
     if (values.subType === 'Event Insurance') {
       return (
         <div className="dynamic-fields">
@@ -594,7 +576,6 @@ export function QuoteForm() {
       );
     }
 
-    // Life Insurance specific fields
     if (values.insuranceType === 'life') {
       return (
         <div className="dynamic-fields">
@@ -712,7 +693,6 @@ export function QuoteForm() {
       );
     }
 
-    // Auto Insurance specific fields
     if (values.insuranceType === 'auto') {
       return (
         <div className="dynamic-fields">
@@ -853,7 +833,6 @@ export function QuoteForm() {
         </div>
 
         <form onSubmit={handleSubmit} className="quote-form">
-          {/* Insurance Type Selection */}
           <div className="form-group">
             <label htmlFor="insuranceType" className="form-label">
               Insurance Type *
@@ -877,7 +856,6 @@ export function QuoteForm() {
             )}
           </div>
 
-          {/* Sub Type Selection */}
           {values.insuranceType && (
             <div className="form-group">
               <label htmlFor="subType" className="form-label">
@@ -905,7 +883,6 @@ export function QuoteForm() {
             </div>
           )}
 
-          {/* Personal Information Section */}
           <div className="form-section">
             <h3 className="section-title">Personal Information 👤</h3>
 
@@ -1013,10 +990,8 @@ export function QuoteForm() {
             </div>
           </div>
 
-          {/* Dynamic Fields Based on Insurance Type */}
           {renderDynamicFields()}
 
-          {/* Show selected insurance details - updates dynamically */}
           {values.subType && (
             <div className="selected-insurance-info">
               <h3>Selected Insurance Details:</h3>
@@ -1035,7 +1010,6 @@ export function QuoteForm() {
             </div>
           )}
 
-          {/* Submit Button */}
           <div className="form-actions">
             <button type="button" onClick={goBack} className="btn-secondary">
               Cancel

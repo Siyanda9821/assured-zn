@@ -1,7 +1,5 @@
-// src/components/carousels/InsuranceCard.jsx
 import { useNavigate } from "react-router";
 import IconButton from "@mui/material/IconButton";
-// import EditIcon from "@mui/icons-material/Edit";
 import RequestQuoteIcon from "@mui/icons-material/RequestQuote";
 import './InsuranceCard.css';
 
@@ -12,7 +10,6 @@ export function InsuranceCard({ item, color, isCenter = false, insuranceType }) 
   const handleGetQuote = () => {
     console.log(`Getting quote for: ${item.title}`, item.id);
 
-    // Navigate with state containing pre-fill data
     navigate('/quote-form', {
       state: {
         insuranceType: insuranceType,
@@ -32,7 +29,6 @@ export function InsuranceCard({ item, color, isCenter = false, insuranceType }) 
 
   return (
     <div className={`insurance-card ${isCenter ? 'insurance-card--center' : ''}`}>
-      {/* Card Header */}
       <div className="insurance-card__header">
         <div className={`insurance-card__icon ${color}`}>
           <IconComponent className="insurance-card__icon-svg" />
@@ -50,12 +46,10 @@ export function InsuranceCard({ item, color, isCenter = false, insuranceType }) 
         </div>
       </div>
 
-      {/* Description */}
       <p className="insurance-card__description">
         {item.description}
       </p>
 
-      {/* Features List */}
       <div className="insurance-card__features">
         <h4 className="insurance-card__features-title">
           Key Features:
@@ -76,7 +70,6 @@ export function InsuranceCard({ item, color, isCenter = false, insuranceType }) 
         </ul>
       </div>
 
-      {/* Action Buttons */}
       <div className="insurance-card__actions">
         <button
           onClick={handleGetQuote}
@@ -92,7 +85,6 @@ export function InsuranceCard({ item, color, isCenter = false, insuranceType }) 
           aria-label={`Edit ${item.title} insurance`}
           className="insurance-card__edit-btn"
         >
-          {/* <EditIcon /> */}
         </IconButton>
       </div>
     </div>

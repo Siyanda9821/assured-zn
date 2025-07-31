@@ -1,15 +1,11 @@
-/* src/pages/QuoteForm.css */
-
 .quote-form-page {
   min-height: 100vh;
-  /* background: linear-gradient(135deg, #eff6ff 0%, #e0e7ff 100%); */
   padding: 2rem 1rem;
 }
 
 .quote-form-container {
   max-width: 48rem;
   margin: 0 auto;
-  /* background-color: white; */
   border-radius: 1rem;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   overflow: hidden;
@@ -184,7 +180,6 @@
   background-color: #e5e7eb;
 }
 
-/* Media queries for responsive design */
 @media (min-width: 768px) {
   .quote-form-page {
     padding: 4rem 2rem;

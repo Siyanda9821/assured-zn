@@ -14,7 +14,6 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 
-// Updated navigation items to match your original nav
 const pages = [
   { name: "Home", path: "/" },
   { name: "Services", path: "/movies" },

@@ -81,7 +81,6 @@ function App() {
               {theme === "light" ? "dark" : "light"}
             </Button>
           </Toolbar>
-          {/* </AppBar> */}
         </Box>
 
         <div className="App">

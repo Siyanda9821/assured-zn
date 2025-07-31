@@ -1,11 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import './Home.css';
 import {
-  AccessTime,         // Short term icon
-  FamilyRestroom,     // Life insurance icon
-  DirectionsCar,      // Auto insurance icon
-  CheckCircle,        // Checkmark icon
-  ArrowForward       // For buttons
+  AccessTime,
+  FamilyRestroom,
+  DirectionsCar,
+  CheckCircle,
+  ArrowForward
 } from '@mui/icons-material';
 
 export function Home() {
@@ -23,7 +23,6 @@ export function Home() {
       </header>
 
       <div className="insurance-sections">
-        {/* Short Term Insurance Section */}
         <section className="insurance-card">
           <div className="insurance-icon">
             <AccessTime fontSize="large" color="primary" />
@@ -47,7 +46,6 @@ export function Home() {
           </button>
         </section>
 
-        {/* Life Insurance Section */}
         <section className="insurance-card">
           <div className="insurance-icon">
             <FamilyRestroom fontSize="large" color="primary" />
@@ -71,7 +69,6 @@ export function Home() {
           </button>
         </section>
 
-        {/* Auto Insurance Section */}
         <section className="insurance-card">
           <div className="insurance-icon">
             <DirectionsCar fontSize="large" color="primary" />

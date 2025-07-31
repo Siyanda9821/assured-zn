@@ -2,26 +2,23 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './Dashboard.css';
 import {
-  // Policy type icons
-  Flight,            // Travel Insurance
-  Smartphone,        // Gadget Insurance
-  Celebration,       // Event Insurance
-  FamilyRestroom,    // Life Insurance
-  DirectionsCar,     // Auto Insurance
-  Shield,            // Default insurance icon
+  Flight,
+  Smartphone,
+  Celebration,
+  FamilyRestroom,
+  DirectionsCar,
+  Shield,
 
-  // Other icons
-  CheckCircle,       // Checkmark
-  Description,       // Documents
-  CreditCard,        // Payment methods
-  SupportAgent,      // Contact support
-  Assessment,        // Claims history
-  Add,               // New quote
-  Close,             // Close button
-  ConfirmationNumber // Success message
+  CheckCircle,
+  Description,
+  CreditCard,
+  SupportAgent,
+  Assessment,
+  Add,
+  Close,
+  ConfirmationNumber
 } from '@mui/icons-material';
 
-// API Configuration
 const API_BASE_URL = 'https://688bd2e5cd9d22dda5cb646b.mockapi.io';
 
 export function Dashboard() {
@@ -36,7 +33,6 @@ export function Dashboard() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Load policies from MockAPI
   const loadPoliciesFromAPI = async () => {
     try {
       setLoading(true);
@@ -56,7 +52,6 @@ export function Dashboard() {
       const apiPolicies = await response.json();
       console.log('Loaded policies from API:', apiPolicies);
 
-      // Also sync with localStorage
       localStorage.setItem('userPolicies', JSON.stringify(apiPolicies));
       setPolicies(apiPolicies);
 
@@ -64,7 +59,6 @@ export function Dashboard() {
       console.error('Error loading policies from API:', err);
       setError('Failed to load policies from server');
 
-      // Fallback to localStorage
       const localPolicies = JSON.parse(localStorage.getItem('userPolicies') || '[]');
       setPolicies(localPolicies);
     } finally {
@@ -72,7 +66,6 @@ export function Dashboard() {
     }
   };
 
-  // Delete policy from MockAPI
   const deletePolicyFromAPI = async (policyId) => {
     try {
       const response = await fetch(`${API_BASE_URL}/policies/${policyId}`, {
@@ -161,14 +154,11 @@ export function Dashboard() {
   const handleCancelPolicy = async (policy) => {
     if (window.confirm(`Are you sure you want to cancel your ${policy.type} policy? This action cannot be undone.`)) {
       try {
-        // Delete from MockAPI
         await deletePolicyFromAPI(policy.id);
 
-        // Update local state
         const updatedPolicies = policies.filter(p => p.id !== policy.id);
         setPolicies(updatedPolicies);
 
-        // Update localStorage
         localStorage.setItem('userPolicies', JSON.stringify(updatedPolicies));
 
         setMessage(`${policy.type} policy has been cancelled successfully.`);
@@ -539,7 +529,6 @@ export function Dashboard() {
     );
   };
 
-  // Loading state
   if (loading) {
     return (
       <div className="dashboard-page">
@@ -553,7 +542,6 @@ export function Dashboard() {
     );
   }
 
-  // Error state
   if (error) {
     return (
       <div className="dashboard-page">
@@ -575,7 +563,6 @@ export function Dashboard() {
     );
   }
 
-  // Empty state
   if (policies.length === 0) {
     return (
       <div className="dashboard-page">

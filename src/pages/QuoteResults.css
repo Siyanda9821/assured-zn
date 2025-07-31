@@ -42,7 +42,6 @@
   }
 }
 
-/* Pricing Card */
 .pricing-card {
   border-radius: 15px;
   padding: 2rem;
@@ -133,7 +132,6 @@
   }
 }
 
-/* Quote Details */
 .quote-details {
   background: #f8f9fa;
   border-radius: 15px;
@@ -202,11 +200,11 @@
   text-align: right;
 }
 
-/* Coverage Information */
 .coverage-info {
   border-radius: 15px;
   padding: 2rem;
-  grid-column: 1 / -1;
+  grid-column-start: 1;
+  grid-column-end: -1;
 }
 
 .coverage-info h2 {
@@ -236,7 +234,6 @@
   background: rgba(255, 255, 255, 0.15);
 }
 
-/* Action Buttons */
 .quote-actions {
   padding: 2rem;
   background: #f8f9fa;
@@ -313,7 +310,6 @@
   }
 }
 
-/* Mobile Responsiveness */
 @media (max-width: 768px) {
   .quote-results-page {
     padding: 1rem;

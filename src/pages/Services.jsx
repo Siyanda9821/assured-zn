@@ -1,4 +1,3 @@
-// src/pages/Services.jsx
 import { InsuranceCarousels } from '../components/InsuranceCarousels';
 import './Services.css';
 import Paper from '@mui/material/Paper';
@@ -7,7 +6,6 @@ export function Services() {
   return (
      <Paper sx={{ bgcolor: 'background.paper', p: 3 }}>
     <div className="services-page">
-      {/* Page Header */}
       <div className="services-header">
         <div className="services-header__container">
           <h1 className="services-header__title">
@@ -20,10 +18,8 @@ export function Services() {
         </div>
       </div>
 
-      {/* Insurance Carousels */}
       <InsuranceCarousels />
 
-      {/* Additional Services Info */}
       <div className="services-info">
         <div className="services-info__container">
           <h2 className="services-info__title">

@@ -2,7 +2,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import './QuoteResults.css';
 
-// API Configuration
 const API_BASE_URL = 'https://688bd2e5cd9d22dda5cb646b.mockapi.io';
 
 export function QuoteResults() {
@@ -13,7 +12,6 @@ export function QuoteResults() {
   const formData = location.state?.formData || {};
   const quoteId = location.state?.quoteId;
 
-  // ✅ Redirect in useEffect to avoid React warning
   useEffect(() => {
     if (!formData.subType) {
       navigate('/services');
@@ -21,14 +19,12 @@ export function QuoteResults() {
   }, [formData, navigate]);
 
   if (!formData.subType) {
-    return null; // Avoid rendering during redirect
+    return null;
   }
 
-  // Calculate pricing based on insurance type and form data
   const calculatePrice = () => {
     const { subType, insuranceType } = formData;
 
-    // Base prices for different insurance types
     const basePrices = {
       'Travel Insurance': 25,
       'Gadget Insurance': 15,
@@ -45,7 +41,6 @@ export function QuoteResults() {
     let multiplier = 1;
     let additionalFees = 0;
 
-    // Calculate multipliers based on specific form data
     if (subType === 'Travel Insurance') {
       const travelers = parseInt(formData.travelersCount) || 1;
       const travelDays = formData.travelStartDate && formData.travelEndDate
@@ -54,7 +49,6 @@ export function QuoteResults() {
 
       multiplier = travelers * Math.max(1, travelDays / 7);
 
-      // International destinations cost more
       const destination = formData.destination?.toLowerCase() || '';
       if (destination.includes('europe') || destination.includes('asia') || destination.includes('australia')) {
         multiplier *= 1.5;
@@ -63,9 +57,8 @@ export function QuoteResults() {
 
     else if (subType === 'Gadget Insurance') {
       const deviceValue = parseInt(formData.deviceValue) || 1000;
-      multiplier = Math.max(1, deviceValue / 1000 * 0.02); // 2% of device value annually
+      multiplier = Math.max(1, deviceValue / 1000 * 0.02);
 
-      // Premium devices cost more to insure
       const brand = formData.deviceBrand?.toLowerCase() || '';
       if (brand.includes('apple') || brand.includes('samsung') || brand.includes('sony')) {
         multiplier *= 1.2;
@@ -78,7 +71,6 @@ export function QuoteResults() {
 
       multiplier = Math.max(1, (guests / 100) * Math.sqrt(budget / 5000));
 
-      // High-risk events
       const eventType = formData.eventType?.toLowerCase() || '';
       if (eventType.includes('concert') || eventType.includes('festival')) {
         multiplier *= 1.8;
@@ -89,17 +81,14 @@ export function QuoteResults() {
       const coverage = parseInt(formData.coverageAmount) || 100000;
       const age = calculateAge(formData.dateOfBirth);
 
-      // Base calculation: coverage amount / 1000 * age factor
       multiplier = (coverage / 100000) * Math.max(1, age / 30);
 
-      // Smoking penalty
       if (formData.smokingStatus === 'current') {
         multiplier *= 2.5;
       } else if (formData.smokingStatus === 'former') {
         multiplier *= 1.3;
       }
 
-      // Family cover additional members
       if (subType === 'Family Cover' && formData.familyMembers) {
         multiplier *= Math.max(1, parseInt(formData.familyMembers) * 0.7);
       }
@@ -112,28 +101,24 @@ export function QuoteResults() {
       const mileage = parseInt(formData.annualMileage) || 12000;
       const experience = parseInt(formData.drivingExperience) || 5;
 
-      // Newer cars and high mileage increase premium
       multiplier = Math.max(0.5, (15 - vehicleAge) / 10) * Math.max(1, mileage / 15000);
 
-      // Experience discount
       if (experience >= 10) {
         multiplier *= 0.8;
       } else if (experience < 3) {
         multiplier *= 1.5;
       }
 
-      // Luxury brands cost more
       const make = formData.vehicleMake?.toLowerCase() || '';
       if (make.includes('bmw') || make.includes('mercedes') || make.includes('audi') || make.includes('lexus')) {
         multiplier *= 1.4;
       }
     }
 
-    // Administrative fee
     additionalFees = 15;
 
     const monthlyPrice = Math.round((basePrice * multiplier) * 100) / 100;
-    const annualPrice = Math.round((monthlyPrice * 12 * 0.9) * 100) / 100; // 10% discount for annual
+    const annualPrice = Math.round((monthlyPrice * 12 * 0.9) * 100) / 100;
     const totalWithFees = Math.round((monthlyPrice + additionalFees) * 100) / 100;
 
     return {
@@ -144,7 +129,6 @@ export function QuoteResults() {
     };
   };
 
-  // Helper function to calculate age
   const calculateAge = (dateOfBirth) => {
     if (!dateOfBirth) return 30;
     const today = new Date();
@@ -160,7 +144,6 @@ export function QuoteResults() {
 
   const pricing = calculatePrice();
 
-  // Submit policy to MockAPI
   const submitPolicyToAPI = async (policyData) => {
     try {
       const response = await fetch(`${API_BASE_URL}/policies`, {
@@ -185,11 +168,9 @@ export function QuoteResults() {
     }
   };
 
-  // Format form data for display
   const formatFormData = () => {
     const sections = [];
 
-    // Personal Information
     sections.push({
       title: "Personal Information",
       data: [
@@ -200,7 +181,6 @@ export function QuoteResults() {
       ]
     });
 
-    // Insurance specific data
     if (formData.subType === 'Travel Insurance') {
       sections.push({
         title: "Travel Details",
@@ -272,12 +252,10 @@ export function QuoteResults() {
 
   const sections = formatFormData();
 
-  // Handle accepting the quote
   const handleAcceptQuote = async () => {
     setIsProcessing(true);
 
     try {
-      // Create policy data to store
       const policyData = {
         type: formData.subType,
         category: formData.insuranceType,
@@ -296,15 +274,12 @@ export function QuoteResults() {
         updatedAt: new Date().toISOString()
       };
 
-      // Submit to MockAPI
       const savedPolicy = await submitPolicyToAPI(policyData);
 
-      // Also store in localStorage as backup
       const existingPolicies = JSON.parse(localStorage.getItem('userPolicies') || '[]');
       existingPolicies.push({ ...savedPolicy, id: savedPolicy.id });
       localStorage.setItem('userPolicies', JSON.stringify(existingPolicies));
 
-      // Navigate to dashboard
       navigate('/dashboard', {
         state: {
           message: 'Policy created successfully!',
@@ -339,7 +314,6 @@ export function QuoteResults() {
         </div>
 
         <div className="quote-results-content">
-          {/* Pricing Summary */}
           <div className="pricing-card">
             <div className="pricing-header">
               <h2>Pricing Summary</h2>
@@ -370,7 +344,6 @@ export function QuoteResults() {
             </div>
           </div>
 
-          {/* Quote Details */}
           <div className="quote-details">
             <h2>Quote Details</h2>
 
@@ -389,7 +362,6 @@ export function QuoteResults() {
             ))}
           </div>
 
-          {/* Coverage Information */}
           <div className="coverage-info">
             <h2>What's Covered</h2>
             <div className="coverage-list">
@@ -441,7 +413,6 @@ export function QuoteResults() {
           </div>
         </div>
 
-        {/* Action Buttons */}
         <div className="quote-actions">
           <button
             onClick={handleBackToServices}

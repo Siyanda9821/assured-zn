@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { CarouselSection } from './CarouselSection';
 import './InsuranceCarousels.css';
 
-// Material-UI Icons
 import HomeIcon from '@mui/icons-material/Home';
 import FlightIcon from '@mui/icons-material/Flight';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -14,11 +13,8 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import HealthAndSafetyIcon from '@mui/icons-material/HealthAndSafety';
 import UmbrellaIcon from '@mui/icons-material/Umbrella';
 
-// ===== CONFIGURATION =====
-// Replace with your actual MockAPI URL
 const API_BASE_URL = 'https://688bdb51cd9d22dda5cb8126.mockapi.io';
 
-// Icon mapping for API responses - using Material-UI icons
 const iconMap = {
   'home': HomeIcon,
   'plane': FlightIcon,
@@ -38,8 +34,6 @@ const iconMap = {
   'default': SecurityIcon
 };
 
-// Smart (Parent) - React to User action
-// No props - handles its own data (like your MovieList)
 export function InsuranceCarousels() {
   const [shortTermData, setShortTermData] = useState([]);
   const [lifeInsuranceData, setLifeInsuranceData] = useState([]);
@@ -47,14 +41,11 @@ export function InsuranceCarousels() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Task: Get Insurance data from MockAPI
-  // Make sure there is no infinite call to API (like your getMovies pattern)
   async function getInsuranceData() {
     try {
       setLoading(true);
       setError(null);
 
-      // Fetch all insurance products from MockAPI
       const response = await fetch(`${API_BASE_URL}/insurance-products`, {
         method: "GET",
         headers: {
@@ -69,7 +60,6 @@ export function InsuranceCarousels() {
       const allProducts = await response.json();
       console.log('Fetched insurance products:', allProducts);
 
-      // Process data and add icons
       const processData = (data) => {
         return data.map(item => ({
           ...item,
@@ -77,12 +67,10 @@ export function InsuranceCarousels() {
         }));
       };
 
-      // Filter products by category
       const shortTerm = allProducts.filter(product => product.category === 'short-term');
       const life = allProducts.filter(product => product.category === 'life');
       const auto = allProducts.filter(product => product.category === 'auto');
 
-      // Set the categorized data
       setShortTermData(processData(shortTerm));
       setLifeInsuranceData(processData(life));
       setAutoInsuranceData(processData(auto));
@@ -98,9 +86,8 @@ export function InsuranceCarousels() {
 
   useEffect(() => {
     getInsuranceData();
-  }, []); // [] -> Empty Dependency array (like your pattern)
+  }, []);
 
-  // Better UX - Loading state (like your EditMovie pattern)
   if (loading) {
     return (
       <div className="insurance-carousels__loading-container">
@@ -110,7 +97,6 @@ export function InsuranceCarousels() {
     );
   }
 
-  // Error state
   if (error) {
     return (
       <div className="insurance-carousels__error-container">
@@ -138,11 +124,9 @@ export function InsuranceCarousels() {
     );
   }
 
-  // When data is loaded - Below will render (like your EditMovie pattern)
   return (
     <div className="insurance-carousels">
       <div className="insurance-carousels__container">
-        {/* Short-Term Insurance Carousel */}
         <CarouselSection
           title="Short-Term Insurance"
           subtitle="Flexible protection for immediate needs"
@@ -151,7 +135,6 @@ export function InsuranceCarousels() {
           insuranceType="short-term"
         />
 
-        {/* Life Insurance Carousel */}
         <CarouselSection
           title="Life Insurance"
           subtitle="Secure your family's financial future"
@@ -160,7 +143,6 @@ export function InsuranceCarousels() {
           insuranceType="life"
         />
 
-        {/* Auto Insurance Carousel */}
         <CarouselSection
           title="Auto Insurance"
           subtitle="Complete protection for your vehicle"

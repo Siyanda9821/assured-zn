@@ -1,4 +1,3 @@
-// src/components/carousels/CarouselSection.jsx
 import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { InsuranceCard } from './InsuranceCard';
@@ -8,7 +7,6 @@ export function CarouselSection({ title, subtitle, data, color, insuranceType })
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
-  // Auto-advance carousel every 5 seconds
   useEffect(() => {
     if (!isAutoPlaying || data.length <= 1) return;
 
@@ -19,7 +17,6 @@ export function CarouselSection({ title, subtitle, data, color, insuranceType })
     return () => clearInterval(interval);
   }, [isAutoPlaying, data.length]);
 
-  // Navigation functions
   const goToPrevious = () => {
     setCurrentIndex(prev => prev === 0 ? data.length - 1 : prev - 1);
   };
@@ -32,7 +29,6 @@ export function CarouselSection({ title, subtitle, data, color, insuranceType })
     setCurrentIndex(index);
   };
 
-  // Calculate which cards to show (show 3 cards on desktop, 1 on mobile)
   const getVisibleCards = () => {
     if (data.length === 0) return [];
 
@@ -64,19 +60,16 @@ export function CarouselSection({ title, subtitle, data, color, insuranceType })
 
   return (
     <div className="carousel-section">
-      {/* Section Header */}
       <div className="carousel-section__header">
         <h2 className="carousel-section__title">{title}</h2>
         <p className="carousel-section__subtitle">{subtitle}</p>
       </div>
 
-      {/* Carousel Container */}
       <div
         className="carousel-section__container"
         onMouseEnter={() => setIsAutoPlaying(false)}
         onMouseLeave={() => setIsAutoPlaying(true)}
       >
-        {/* Navigation Arrows - only show if more than 1 item */}
         {data.length > 1 && (
           <>
             <button
@@ -97,7 +90,6 @@ export function CarouselSection({ title, subtitle, data, color, insuranceType })
           </>
         )}
 
-        {/* Cards Container */}
         <div className="carousel-section__cards-container">
           <div className="carousel-section__cards">
             {visibleCards.map((item, index) => (
@@ -116,7 +108,6 @@ export function CarouselSection({ title, subtitle, data, color, insuranceType })
           </div>
         </div>
 
-        {/* Dot Indicators - only show if more than 1 item */}
         {data.length > 1 && (
           <div className="carousel-section__indicators">
             {data.map((_, index) => (
