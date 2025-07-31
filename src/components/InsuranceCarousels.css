@@ -1,0 +1,67 @@
+/* src/components/carousels/InsuranceCarousels.css */
+
+.insurance-carousels {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.insurance-carousels__container {
+  max-width: 80rem;
+  margin: 0 auto;
+}
+
+.insurance-carousels__loading {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #374151;
+  padding: 2rem;
+}
+
+.insurance-carousels__error-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #eff6ff 0%, #e0e7ff 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.insurance-carousels__error-content {
+  text-align: center;
+}
+
+.insurance-carousels__error-box {
+  background-color: #fef2f2;
+  border: 1px solid #fca5a5;
+  color: #b91c1c;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  max-width: 24rem;
+}
+
+.insurance-carousels__error-title {
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  font-size: 1.125rem;
+}
+
+.insurance-carousels__error-message {
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+}
+
+.insurance-carousels__retry-btn {
+  background-color: #ef4444;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.insurance-carousels__retry-btn:hover {
+  background-color: #dc2626;
+}
