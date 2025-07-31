@@ -33,9 +33,10 @@ const createValidationSchema = (insuranceType, subType) => {
       .email("Please enter a valid email address")
       .min(5, "Email must be at least 5 characters"),
 
+    // Fixed phone regex - removed unnecessary escapes
     phone: string()
       .required("Phone number is required 📱")
-      .matches(/^[\+]?[0-9\s\-\(\)]{10,15}$/, "Please enter a valid phone number")
+      .matches(/^[+]?[0-9\s\-()]{10,15}$/, "Please enter a valid phone number")
       .min(10, "Phone number must be at least 10 digits"),
 
     dateOfBirth: date()
@@ -53,7 +54,7 @@ const createValidationSchema = (insuranceType, subType) => {
         }
         return age >= 18;
       })
-  };
+};
 
   if (subType === 'Travel Insurance') {
     baseSchema.destination = string().required("Destination is required ✈️");
