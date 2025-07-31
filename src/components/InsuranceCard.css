@@ -189,7 +189,6 @@
   flex-shrink: 0;
 }
 
-/* Color variants */
 .bg-blue-600 {
   background-color: #2563eb;
 }
@@ -202,7 +201,6 @@
   background-color: #2563eb;
 }
 
-/* Media queries for responsive design */
 @media (min-width: 768px) {
   .insurance-card {
     padding: 1.5rem;
